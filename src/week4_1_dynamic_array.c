@@ -1,7 +1,7 @@
 /*
  * week4_1_dynamic_array.c
- * Author: [Your Name]
- * Student ID: [Your ID]
+ * Author: [Mihails Semjonovs]
+ * Student ID: [251ADB194]
  * Description:
  *   Demonstrates creation and usage of a dynamic array using malloc.
  *   Allocate memory for n integers, read them from the user,
@@ -15,34 +15,46 @@
 #include <stdlib.h>
 
 int main(void) {
-    int n;
-    int *arr = NULL;
+    int number_of_elements;
+    int *numbers = NULL;
 
     printf("Enter number of elements: ");
-    if (scanf("%d", &n) != 1 || n <= 0) {
+
+    if (scanf("%d", &number_of_elements) != 1 || number_of_elements <= 0) {
         printf("Invalid size.\n");
         return 1;
     }
 
-    // TODO: Allocate memory for n integers using malloc
-    // Example: arr = malloc(n * sizeof(int));
+    // Create enough space for all entered numbers
+    numbers = malloc(number_of_elements * sizeof(int));
 
-    // TODO: Check allocation success
-    // If arr is NULL: print "Memory allocation failed." and return 1
+    if (numbers == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
 
-    // TODO: Print the prompt "Enter %d integers: " (with n), then read
-    //       n integers into the array.
-    //       If a value cannot be read: print "Invalid input.",
-    //       free the array and return 1
+    printf("Enter %d integers: ", number_of_elements);
 
-    // TODO: Compute the sum and the average (use floating point for the average)
+    int total_sum = 0;
 
-    // TODO: Print the results exactly as:
-    //       Sum = <sum>
-    //       Average = <average with 2 decimals, %.2f>
+    for (int index = 0; index < number_of_elements; index++) {
+        if (scanf("%d", &numbers[index]) != 1) {
+            printf("Invalid input.\n");
+            free(numbers);
+            return 1;
+        }
 
-    // TODO: Free allocated memory
-    (void)arr;  // remove this line once you use arr
+        total_sum += numbers[index];
+    }
+
+    // Using double keeps the decimal part of the result
+    double average_value =
+        (double)total_sum / number_of_elements;
+
+    printf("Sum = %d\n", total_sum);
+    printf("Average = %.2f\n", average_value);
+
+    free(numbers);
 
     return 0;
 }
